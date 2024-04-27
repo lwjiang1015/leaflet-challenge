@@ -1,5 +1,5 @@
 //Creating the map object
-let myMap = L.map("map").setView([4.11,109.69],2);
+let myMap = L.map("map").setView([4.11,109.69],3);
 
 //Adding the tile layer
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -17,21 +17,21 @@ d3. json(link).then (data=>{
         pointToLayer: function (feature, latlng){
             //Determine color based on earthquake depth
             var color;
-            if (feature.geometry.coordinates[2]<10){color = "#fcae91"}
-            else if (feature.geometry.coordinates[2]<30){color = "#ee9e92"}
-            else if (feature.geometry.coordinates[2]<50){color = "#fb6a4a"}
-            else if (feature.geometry.coordinates[2]<70){color = "#900c3f"}
-            else if (feature.geometry.coordinates[2]<90){color = "#800080"}
-            else {color = "#00008B"};
+            if (feature.geometry.coordinates[2]<10){color = "#f6ddcc"}
+            else if (feature.geometry.coordinates[2]<30){color = "#f5b7b1"}
+            else if (feature.geometry.coordinates[2]<50){color = "#f19481"}
+            else if (feature.geometry.coordinates[2]<70){color = "#ec7063"}
+            else if (feature.geometry.coordinates[2]<90){color = "#a569bd"}
+            else {color = "#5b2c6f"};
 
             //Access longitude and latitude
             return L.circleMarker(latlng, {
-                radius: feature.properties.mag * 3,
+                radius: feature.properties.mag * 4,
                 fillColor:color,
-                color: "white",
+                color: "black",
                 weight: 1,
-                opacity: 1,
-                fillOpacity: 0.8,
+                opacity: 0.8,
+                fillOpacity: 3,
             });
         },
 
@@ -50,17 +50,17 @@ d3. json(link).then (data=>{
     var legend = L.control({position:"bottomright"});
     //Define the legend content and styling
     legend.onAdd = function() {
-        var div = L.DomUtil.create("div", "info legend");
-        var grades = [-10, 10, 30, 50, 70, 90];
-        var colors = ["#fee5d9", "#fcae91", "#fb6a4a", "#ee9e92", "#800080", "#00008B"];
-        var labels = [];
+        let div = L.DomUtil.create("div", "info legend");
+        let grades = [-10, 10, 30, 50, 70, 90];
+        let colors = ["#f6ddcc", "#f5b7b1", "#f19481", "#ec7063", "#a569bd", "#5b2c6f"];
+        let labels = [];
 
         //Loop through the depth ranges and add color labels
-        for (var i = 0; i < grades.length; i++) {
-            div.innerHTML += '<i style="background:' + colors[i] + '"></i> ' 
-            + grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
-}
-
+        for (var i=0; i < grades.length; i++){
+            div.innerHTML += '<i style="background:' + colors[i] + '"></i> ' +
+                grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+    }
+        div.innerHTML += "<ul>" + labels.join("") + "</ul>";
         return div;
     };
     // Add the legend to the map

@@ -22,21 +22,21 @@ function createFeatures(earthquakeData) {
     pointToLayer: function (feature, latlng){
       //Determine color based on earthquake depth
       var color;
-      if (feature.geometry.coordinates[2]<10){color = "#fcae91"}
-      else if (feature.geometry.coordinates[2]<30){color = "#ee9e92"}
-      else if (feature.geometry.coordinates[2]<50){color = "#fb6a4a"}
-      else if (feature.geometry.coordinates[2]<70){color = "#900c3f"}
-      else if (feature.geometry.coordinates[2]<90){color = "#800080"}
-      else {color = "#00008B"};
+      if (feature.geometry.coordinates[2]<10){color = "#f6ddcc"}
+      else if (feature.geometry.coordinates[2]<30){color = "#f5b7b1"}
+      else if (feature.geometry.coordinates[2]<50){color = "#f19481"}
+      else if (feature.geometry.coordinates[2]<70){color = "#ec7063"}
+      else if (feature.geometry.coordinates[2]<90){color = "#a569bd"}
+      else {color = "#5b2c6f"};
 
       //Access longitude and latitude
       return L.circleMarker(latlng, {
-          radius: feature.properties.mag * 3,
-          fillColor:color,
-          color: "white",
-          weight: 1,
-          opacity: 1,
-          fillOpacity: 0.8,
+        radius: feature.properties.mag * 4,
+        fillColor:color,
+        color: "black",
+        weight: 1,
+        opacity: 0.8,
+        fillOpacity: 3,
       });
   },
     onEachFeature: onEachFeature
@@ -91,7 +91,7 @@ let myMap = L.map("map", {
     center: [
         4.11,109.69
     ],
-    zoom: 5,
+    zoom: 3,
     layers: [street, earthquakes]
   });
 
@@ -108,7 +108,7 @@ let myMap = L.map("map", {
     legend.onAdd = function() {
         let div = L.DomUtil.create("div", "info legend");
         let grades = [-10, 10, 30, 50, 70, 90];
-        let colors = ["#fee5d9", "#fcae91", "#fb6a4a", "#ee9e92", "#800080", "#00008B"];
+        let colors = ["#f6ddcc", "#f5b7b1", "#f19481", "#ec7063", "#a569bd", "#5b2c6f"];
         let labels = [];
 
         //Loop through the depth ranges and add color labels
